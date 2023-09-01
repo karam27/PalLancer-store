@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/categories', [CategoriesController::class, 'index']);
+Route::get('/categories/{id}/{title}', [CategoriesController::class, 'show']);
