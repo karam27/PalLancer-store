@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::get('/categories/{id}/{title}', [CategoriesController::class, 'show']);
+Route::get('admin/categories', [CategoriesController::class, 'index']);
+Route::get('admin/categories/create', [CategoriesController::class, 'create']);
+Route::post('admin/categories/create', [CategoriesController::class, 'store']);
+Route::get('admin/categories/{id}/edit', [CategoriesController::class, 'edit']);
+Route::put('admin/categories/{id}', [CategoriesController::class, 'update']);
+Route::delete('admin/categories/{id}', [CategoriesController::class, 'destory']);
