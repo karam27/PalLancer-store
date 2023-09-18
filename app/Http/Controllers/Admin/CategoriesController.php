@@ -23,7 +23,8 @@ class CategoriesController extends Controller
     {
         $parents = Category::orderby('name', 'asc')->get();
         $title = 'Add Category';
-        return view('admin.categories.create', compact('parents', 'title'));
+        $category = new Category();
+        return view('admin.categories.create', compact('parents', 'title', 'category'));
     }
     public function store(Request $request)
     {
@@ -40,9 +41,9 @@ class CategoriesController extends Controller
     }
     public function edit($id)
     {
-        // $category = Category::where('id', '=', $id)->first();
+
         $category = Category::findOrFail($id);
-     
+
         $parents = Category::orderby('name', 'asc')->get();
 
         return view('admin.categories.edit', [
