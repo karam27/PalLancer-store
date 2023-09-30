@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('admin/categories', [CategoriesController::class, 'index']);
-Route::get('admin/categories/create', [CategoriesController::class, 'create']);
-Route::post('admin/categories/create', [CategoriesController::class, 'store']);
-Route::get('admin/categories/{id}/edit', [CategoriesController::class, 'edit']);
-Route::put('admin/categories/{id}', [CategoriesController::class, 'update']);
-Route::delete('admin/categories/{id}', [CategoriesController::class, 'destory']);
+
+
+
+
+
+Route::prefix('admin/categories')->namespace('Admin')->group(function () {
+
+    Route::get('/', [CategoriesController::class, 'index'])->name('admin.categories.index');
+    Route::get('/create', [CategoriesController::class, 'create'])->name('create');
+    Route::get('/{id}', [CategoriesController::class, 'show'])->name('show');
+
+    Route::post('/create', [CategoriesController::class, 'store'])->name('admin.categories.store');
+    Route::get('/{id}/edit', [CategoriesController::class, 'edit'])->name('admin.categroies.edit');
+    Route::put('/{id}', [CategoriesController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/{id}', [CategoriesController::class, 'destory'])->name('admin.categories.destory');
+});
