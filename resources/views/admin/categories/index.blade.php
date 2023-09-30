@@ -1,50 +1,54 @@
-@extends('layouts.dashboard')
-@section('content')
-@section('title', ' Categories List')
+<x-dashborad-layout title="categories">
+    <x-alert title=" Title" type="danger">
+        <x-slot name="actions">
+            <a href="#" class="btn btn-danger">Action button</a>
+        </x-slot>
+        My message body
+    </x-alert>
 
-@if (session()->has('success'))
-    <div class="alert alert-success">
-        <?= session()->get('success') ?>
-@endif
-</div>
-<form action="/admin/categories" method="get" class="d-flex">
-    <input type="text" name="name" class="form-control me-2" placeholder="Serach By Name">
-    <select name="parnet_id" class="form-control me-2">
-        <option value="">All Categories</option>
-        @foreach ($parents as $parent)
-            <option value=" {{ $parent->id }}"> {{ $parent->name }} </option>
-        @endforeach
-    </select>
-    <button type="submit" class="btn btn-secondary">Filter</button>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Parent ID</th>
-            <th>Created At</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($categories as $category)
+    </div>
+    <div class="table-toolbar">
+        <a href="{{ route('admin.categories.store') }}" class="btn btn-info mb-3">Create</a>
+    </div>
+
+    <form action="{{ route('admin.categories.index') }}" method="get" class="d-flex">
+        <input type="text" name="name" class="form-control me-2" placeholder="Serach By Name">
+        <select name="parnet_id" class="form-control me-2">
+            <option value="">All Categories</option>
+            @foreach ($parents as $parent)
+                <option value=" {{ $parent->id }}"> {{ $parent->name }} </option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-secondary">Filter</button>
+    </form>
+    <table class="table">
+        <thead>
             <tr>
-                <td> {{ $category->id }} </td>
-                <td><a href="/admin/categories/ {{ $category->id }}/edit">{{ $category->name }}</a></td>
-                <td> {{ $category->parent_id }}</td>
-                <td>{{ $category->created_at }}</td>
-                <td>{{ $category->status }} </td>
-                <td>
-                    <form action="/admin/categories/ {{ $category->id }} " method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                    </form>
-                </td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Parent ID</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th></th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
-@endsection
+        </thead>
+        <tbody>
+            @foreach ($categories as $category)
+                <tr>
+                    <td> {{ $category->id }} </td>
+                    <td><a href="{{ route('admin.categroies.edit', $category->id) }}">{{ $category->name }}</a></td>
+                    <td> {{ $category->parent_id }}</td>
+                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $category->status }} </td>
+                    <td>
+                        <form action="{{ route('admin.categories.destory', $category->id) }} " method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</x-dashborad-layout>
