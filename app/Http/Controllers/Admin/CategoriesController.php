@@ -19,6 +19,15 @@ class CategoriesController extends Controller
         $parents = Category::orderby('name', 'asc')->get();
         return view('admin.categories.index', ['categories' => $categories, 'parents' => $parents]);
     }
+
+    public function show($id)
+    {
+
+        return view('admin.categories.show', [
+            'category' => Category::findOrFail($id),
+        ]);
+    }
+
     public function create()
     {
         $parents = Category::orderby('name', 'asc')->get();
@@ -37,7 +46,7 @@ class CategoriesController extends Controller
         session()->put('status', 'Category added (form status)!');
         session()->flash('success', 'Category added!');
         $category->save();
-        return  redirect('admin/categories')->with('success', 'Category added!');
+        return  redirect()->route('admin.categories.index')->with('success', 'Category added!');
     }
     public function edit($id)
     {
@@ -61,12 +70,12 @@ class CategoriesController extends Controller
         $category->description = $request->input('description');
         $category->status = $request->post('status');
         $category->save();
-        return redirect('admin/categories')->with('sucess', 'Category updated');
+        return redirect()->route('admin.categories.index')->with('sucess', 'Category updated');
     }
     public function destory($id)
     {
         $category = Category::find($id);
         $category->delete();
-        return redirect('/admin/categories')->with('success', 'Category deleted');
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted');
     }
 }
