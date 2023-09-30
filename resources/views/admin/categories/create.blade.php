@@ -1,11 +1,9 @@
-@extends('layouts.dashboard')
-@section('title', 'Create Category')
-@section('content')
+<x-dashborad-layout title="Add Categories">
 
-    <form action="/admin/categories/create" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.categories.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        @include('admin.categories._form',[
-        'button_label'=>'Add'
+        @include('admin.categories._form', [
+            'button_label' => 'Add',
         ])
     </form>
     </div>
@@ -13,4 +11,4 @@
     </body>
 
     </html>
-@endsection
+</x-dashborad-layout>
